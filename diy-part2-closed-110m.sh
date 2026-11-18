@@ -63,6 +63,12 @@ echo "99-custom-settings 执行完成：拨号、WiFi分离、中文界面、Tai
 exit 0
 EOF
 
+# ==================== 预置 OpenClash Meta (mihomo) ARM64 内核 ====================
+mkdir -p package/base-files/files/etc/openclash/core
+curl -sL https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-arm64.tar.gz | tar -xz -C package/base-files/files/etc/openclash/core/
+mv package/base-files/files/etc/openclash/core/clash package/base-files/files/etc/openclash/core/clash_meta
+chmod +x package/base-files/files/etc/openclash/core/clash_meta
+
 # 给生成的脚本赋予执行权限
 chmod +x package/base-files/files/etc/uci-defaults/99-custom-settings
 
