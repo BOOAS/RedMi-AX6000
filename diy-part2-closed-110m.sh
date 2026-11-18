@@ -56,23 +56,6 @@ uci set system.@system[0].zonename='Asia/Shanghai'
 uci commit luci
 uci commit system
 
-# 5. 放行 Tailscale 通信端口 (41641)
-uci add firewall rule
-uci set firewall.@rule[-1].name='Allow-Tailscale-Port'
-uci set firewall.@rule[-1].src='*'
-uci set firewall.@rule[-1].dest_port='41641'
-uci set firewall.@rule[-1].proto='udp'
-uci set firewall.@rule[-1].target='ACCEPT'
-uci commit firewall
-
-# 6. 【新增】自动配置 Tailscale 社区版软件源与公钥 (针对 ImmortalWrt 24.10)
-# 这样固件刷完后，opkg 源里就自带社区仓库，方便以后在线更新
-wget -qO /tmp/key-build.pub https://Tokisaki-Galaxy.github.io/luci-app-tailscale-community/all/key-build.pub
-[ -s /tmp/key-build.pub ] && opkg-key add /tmp/key-build.pub
-if ! grep -q "tailscale_community" /etc/opkg/customfeeds.conf; then
-    echo "src/gz tailscale_community https://Tokisaki-Galaxy.github.io/luci-app-tailscale-community/all" >> /etc/opkg/customfeeds.conf
-fi
-
 # 7. 重新加载服务使配置生效
 /etc/init.d/network restart
 
