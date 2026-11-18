@@ -7,5 +7,7 @@ git clone https://github.com/gdy666/luci-app-lucky.git package/luci-app-lucky
 echo 'src-git tailscale_community https://github.com/Tokisaki-Galaxy/luci-app-tailscale-community' >> feeds.conf.default
 # 给权限
 chmod -R 755 ./package/luci-app-lucky/*
+# 添加 OpenClash 源码
+git clone --depth=1 https://github.com/vernesong/OpenClash.git package/OpenClash
 
 echo "diy-part1.sh 执行完成：已添加 Lucky。"
